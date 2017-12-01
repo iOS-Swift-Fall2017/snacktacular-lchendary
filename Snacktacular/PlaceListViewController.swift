@@ -136,36 +136,7 @@ class PlaceListViewController: UIViewController {
                     print("Document updated with reference ID \(ref)")
                     self.places[index].placeDocumentID = "\(ref!.documentID)"
                 }
-                
             }
-            
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ShowDetail" {
-            let destination = segue.destination as! DetailViewController
-            let selectedRow = tableView.indexPathForSelectedRow!.row
-            destination.placeData = places[selectedRow]
-        } else {
-            if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                tableView.deselectRow(at: selectedIndexPath, animated: true)
-            }
-        }
-    }
-    
-    @IBAction func unwindFromDetail(segue: UIStoryboardSegue) {
-        let source = segue.source as! DetailViewController
-        if let selectedIndexPath = tableView.indexPathForSelectedRow {
-            places[selectedIndexPath.row] = (source.placeData)!
-            tableView.reloadRows(at: [selectedIndexPath], with: .automatic)
-            saveData(index: selectedIndexPath.row)
-        } else {
-            let newIndexPath = IndexPath(row: places.count, section: 0)
-            places.append((source.placeData)!)
-            tableView.insertRows(at: [newIndexPath], with: .bottom)
-            tableView.scrollToRow(at: newIndexPath, at: .bottom, animated: true)
-            saveData(index: newIndexPath.row)
         }
     }
     
@@ -231,5 +202,4 @@ extension PlaceListViewController: FUIAuthDelegate {
         
         return loginViewController
     }
-    
 }
